@@ -10,7 +10,11 @@ export async function getTokenOrRefresh() {
             const res = await axios.get('/api/get-speech-token');
             const token = res.data.token;
             const region = res.data.region;
-            cookie.set('speech-token', region + ':' + token, {maxAge: 540, path: '/'});
+            cookie.set('speech-token', region + ':' + token, 
+                {
+                maxAge: 1.8E6 /* 1.8 million milliseconds, or 30 minutes */,
+                path: '/'
+            });
 
             console.log('Token fetched from back-end: ' + token);
             return { authToken: token, region: region };
